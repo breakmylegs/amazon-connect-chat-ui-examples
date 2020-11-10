@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Amazon Connect Chat Demo</title>
+    <title>CIE Bank</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -22,9 +22,6 @@
 
         }
 
-        nav {
-            width: 690px;
-        }
 
         .section-main {
 
@@ -213,40 +210,30 @@
     <div class="wrap">
         <section class="section-main" id="section-main">
             <header>
-                <h1 align="center" style="font-size: 1.5em">Amazon Connect Omni-Channel Demo</h1>
+                <h1 align="center" style="font-size: 1.5em">CIE Bank</h1>
             </header>
 
-            <form name="contactDetails" id="contactDetails" style="padding-top: 30px">
-                <fieldset>
-                    <div>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input name="firstName" type="text" id="firstName" placeholder="First Name"
-                                            style="width:161px;">
-                                    </td>
-                                    <td>
-                                        <input name="username" type="text" id="username" placeholder="Username"
-                                            style="width:161px;">
-                                    </td>
-                                    <td style="padding-left: 10px;">
-                                        <input type="submit" style="padding-left: 10px;" class="submit" id="startChat"
-                                            value="Start Chat"></input>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    <div>
-
-                    </div>
-                </fieldset>
+ 
+          <form name="contactDetails" id="contactDetails" style="padding-top: 30px">
+              <fieldset>
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td><input name="Name" type="text" id="name" placeholder="Name"
+                                            style="width:161px;"></td>
+                        <td><input customerid="customer ID" type="text" id="customerid" placeholder="customerid"
+                                            style="width:161px;"></td>
+                        <td style="padding-left: 10px;"><input type="submit" style="padding-left: 10px;" class="submit" id="startChat"
+                                            value="Start Chat"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div></div>
+              </fieldset>
             </form>
-
-        </section>
+</section>
 
         <script>
             $(document).ready((a) => {
@@ -270,33 +257,34 @@
                 $('#contactDetails').submit(function (e) {
                     e.preventDefault();
 
-                    var customerName = $('#firstName').val();
-                    var username = $('#username').val();
-                    if (!customerName || !username) {
-                        alert('you must enter a name & username');
+                    var name = $('#name').val();
+                    var customerid = $('#customerid').val();
+                    if (!name || !customerid) {
+                        alert('you must enter a name & customer ID');
                         document.getElementById("contactDetails").reset();
                     } else {
 
-                        console.log("this is the first name:" + customerName);
-                        console.log("this is the username: " + username);
+                        console.log("this is the first name:" + name);
+                        console.log("this is the customer ID: " + customerid);
                         document.getElementById("contactDetails").reset();
                         connect.ChatInterface.initiateChat({
-                            name: customerName,
-                            username: username,
-                            region: "${region}",
-                            apiGatewayEndpoint: "https://${apiId}.execute-api.${region}.amazonaws.com/Prod",
+                            name: name,
+                            customerid: customerid,
+                            region: "eu-west-2",
+                            apiGatewayEndpoint: "https://ibzdr4m2qe.execute-api.eu-west-2.amazonaws.com/Prod",
                             contactAttributes: JSON.stringify({
-                                "customerName": customerName
+                                "name": name,
+								"customerid": customerid
                             }),
-                            contactFlowId: "${contactFlowId}",
-                            instanceId: "${instanceId}"
+                            contactFlowId: "804b5331-4796-4d78-aa0c-e34c41dc2ff7",
+                            instanceId: "80d1e11b-948c-4b10-af10-e2e872350d2c"
                         }, successHandler, failureHandler)
 
-                        $('#firstName').blur();
-                        $('#username').blur();
+                        $('#name').blur();
+                        $('#customerid').blur();
                         document.getElementById("startChat").disabled = true;
-                        document.getElementById("firstName").disabled = true;
-                        document.getElementById("username").disabled = true;
+                        document.getElementById("name").disabled = true;
+                        document.getElementById("customerid").disabled = true;
                         $("#nav").css("width", "1063");
                         $('#chatWrapper').hide();
                         $("#section-chat").show("slide");
@@ -378,8 +366,8 @@
 
             function resetForm() {
                 document.getElementById("startChat").disabled = false;
-                document.getElementById("firstName").disabled = false;
-                document.getElementById("username").disabled = false;
+                document.getElementById("name").disabled = false;
+                document.getElementById("customerid").disabled = false;
                 $("#section-chat").removeAttr('style');
                 $("#nav").css("width", "690");
                 $("#section-chat").hide("slide");
